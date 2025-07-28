@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RunPulse - Modern Running Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+      background-color: #1f2937; /* Consistent dark theme */
+    }
+    .hero-bg {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://www.sundried.com/cdn/shop/articles/c27ddca5b9550a6940dfef2581b6c38d_a85a896c-d49c-4375-bd4c-be7fe368d852_1200x.jpg?v=1745829701');
+      background-size: cover;
+      background-position: center;
+      /* Removed background-attachment: fixed */
+    }
+    .animate-slide-up {
+      animation: slideUp 0.5s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background-color: #374151; /* Consistent card background */
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    /* Improved spacing and readability */
+    section {
+      padding: 5rem 1rem;
+    }
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+    }
+    p {
+      line-height: 1.6;
+    }
+    /* Accessibility improvements */
+    a:focus {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+    }
+    input:focus, textarea:focus {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body class="text-white">
+  <!-- Navigation -->
+  <nav class="bg-gray-800 p-4 sticky top-0 z-50 shadow-lg">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold tracking-tight">SG Runners</h1>
+      <ul class="flex space-x-6">
+        <li><a href="#home" class="hover:text-blue-400 transition-colors">Home</a></li>
+        <li><a href="#events" class="hover:text-blue-400 transition-colors">Events</a></li>
+        <li><a href="#tips" class="hover:text-blue-400 transition-colors">Tips</a></li>
+        <li><a href="#community" class="hover:text-blue-400 transition-colors">Community</a></li>
+        <li><a href="#fitness-apps" class="hover:text-blue-400 transition-colors">Fitness Apps</a></li>
+        <li><a href="#contact" class="hover:text-blue-400 transition-colors">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero-bg h-screen flex items-center justify-center text-center" data-parallax>
+    <div class="animate-slide-up px-4">
+      <h2 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-4">RunPulse: Ignite Your Run</h2>
+      <p class="text-lg md:text-2xl mb-8 max-w-2xl mx-auto">Join a vibrant community of runners, discover events, and elevate your performance.</p>
+      <a href="#events" class="bg-blue-500 text-white px-8 py-3 rounded-full hover:bg-blue-600 transition-colors">Find Your Race</a>
+    </div>
+  </section>
+
+  <!-- Events Section -->
+  <section id="events" class="bg-gray-800 py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl md:text-6xl font-extrabold text-center animate-slide-up mb-6">Upcoming Running Events</h2>
+      <p class="text-xl text-center mb-16 max-w-4xl mx-auto text-gray-300">Join our community at these exciting running events across Singapore. Whether you're a beginner or a seasoned runner, there's something for everyone.</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Standard Chartered Singapore Marathon -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="aspect-w-16 aspect-h-9 bg-gray-700 rounded-lg overflow-hidden mb-6">
+            <img src="https://placehold.co/400x225/374151/FFFFFF/png?text=SCSM+2024" alt="Standard Chartered Singapore Marathon" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm">December 1, 2024</span>
+            <span class="text-yellow-400">Featured Event</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Standard Chartered Singapore Marathon</h3>
+          <p class="text-gray-300 mb-6">Singapore's premier marathon event featuring multiple categories. Join thousands of runners in this iconic race through our city's landmarks.</p>
+          <div class="space-y-3 mb-6">
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Full Marathon (42.195km)
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Half Marathon (21.1km)
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              10km Challenge
+            </div>
+          </div>
+          <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors font-semibold">Learn More</a>
+        </div>
+
+        <!-- Marina Bay Run -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="aspect-w-16 aspect-h-9 bg-gray-700 rounded-lg overflow-hidden mb-6">
+            <img src="https://placehold.co/400x225/374151/FFFFFF/png?text=Marina+Bay+Run" alt="Marina Bay Run" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm">October 15, 2024</span>
+            <span class="text-green-400">Community Event</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Marina Bay Run</h3>
+          <p class="text-gray-300 mb-6">A scenic 10km run around Marina Bay, perfect for runners of all levels. Enjoy the beautiful waterfront views and join our community gathering.</p>
+          <div class="space-y-3 mb-6">
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              10km Main Run
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              5km Fun Run
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Post-run Community Breakfast
+            </div>
+          </div>
+          <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors font-semibold">Learn More</a>
+        </div>
+
+        <!-- East Coast Park Trail Run -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="aspect-w-16 aspect-h-9 bg-gray-700 rounded-lg overflow-hidden mb-6">
+            <img src="https://placehold.co/400x225/374151/FFFFFF/png?text=East+Coast+Trail" alt="East Coast Park Trail Run" class="w-full h-full object-cover">
+          </div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm">November 5, 2024</span>
+            <span class="text-purple-400">Trail Run</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">East Coast Park Trail Run</h3>
+          <p class="text-gray-300 mb-6">Experience the natural beauty of East Coast Park in this community trail run. Perfect for nature lovers and trail running enthusiasts.</p>
+          <div class="space-y-3 mb-6">
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              15km Trail Run
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              8km Nature Walk
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Environmental Awareness Program
+            </div>
+          </div>
+          <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors font-semibold">Learn More</a>
+        </div>
+      </div>
+
+      <!-- Community Training Sessions -->
+      <div class="mt-16 text-center">
+        <h3 class="text-3xl font-bold mb-6">Weekly Community Training Sessions</h3>
+        <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">Join our regular training sessions led by experienced runners. All levels welcome!</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-gray-700 p-6 rounded-xl">
+            <h4 class="text-xl font-semibold mb-3">Tuesday Evening Run</h4>
+            <p class="text-gray-300 mb-4">6:30 PM - 8:00 PM</p>
+            <p class="text-gray-300">Botanic Gardens</p>
+          </div>
+          <div class="bg-gray-700 p-6 rounded-xl">
+            <h4 class="text-xl font-semibold mb-3">Thursday Speed Work</h4>
+            <p class="text-gray-300 mb-4">7:00 PM - 8:30 PM</p>
+            <p class="text-gray-300">Kallang Practice Track</p>
+          </div>
+          <div class="bg-gray-700 p-6 rounded-xl">
+            <h4 class="text-xl font-semibold mb-3">Sunday Long Run</h4>
+            <p class="text-gray-300 mb-4">6:00 AM - 8:00 AM</p>
+            <p class="text-gray-300">Marina Bay</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Training Tips Section -->
+  <section id="tips" class="bg-gray-900 py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl md:text-6xl font-extrabold text-center animate-slide-up mb-6">Training Tips</h2>
+      <p class="text-xl text-center mb-16 max-w-4xl mx-auto text-gray-300">Expert advice to help you improve your running performance and stay injury-free.</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Interval Training -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="w-full h-48 bg-gray-700 rounded-xl overflow-hidden mb-6">
+            <img src="https://www.all-about-marathon-training.com/images/IntervalTrainingBeginWorkout.png" alt="Interval Training" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Interval Training</h3>
+          <p class="text-gray-300 mb-6">Boost your speed and endurance with structured high-intensity intervals. Perfect for improving your race pace and overall performance.</p>
+          <div class="space-y-3">
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              30s sprint, 90s recovery
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              400m repeats
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Pyramid intervals
+            </div>
+          </div>
+        </div>
+
+        <!-- Cross-Training -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="w-full h-48 bg-gray-700 rounded-xl overflow-hidden mb-6">
+            <img src="https://cdn.mos.cms.futurecdn.net/V2LDZXJfvfuYzMB6QcqgEo.jpg" alt="Cross-Training" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Cross-Training</h3>
+          <p class="text-gray-300 mb-6">Enhance your running with complementary activities that build strength and prevent injuries.</p>
+          <div class="space-y-3">
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Swimming
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Cycling
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Strength training
+            </div>
+          </div>
+        </div>
+
+        <!-- Hydration -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="w-full h-48 bg-gray-700 rounded-xl overflow-hidden mb-6">
+            <img src="https://i0.wp.com/whatsgood.vitaminshoppe.com/wp-content/uploads/2023/01/girl-drinking-sports-drink.jpg?fit=740%2C307&ssl=1" alt="Hydration" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Hydration</h3>
+          <p class="text-gray-300 mb-6">Stay properly hydrated before, during, and after your runs to maintain peak performance.</p>
+          <div class="space-y-3">
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Pre-run hydration
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Electrolyte balance
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Recovery drinks
+            </div>
+          </div>
+        </div>
+
+        <!-- Recovery -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="w-full h-48 bg-gray-700 rounded-xl overflow-hidden mb-6">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvDdmcpFUa1U021-aSgkv13iRVWUQcaerC5Q&s" alt="Recovery" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Recovery</h3>
+          <p class="text-gray-300 mb-6">Proper recovery is essential for long-term progress and injury prevention.</p>
+          <div class="space-y-3">
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Rest days
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Stretching routine
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Sleep quality
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community Section -->
+  <section id="community" class="bg-gray-800 py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl md:text-6xl font-extrabold text-center animate-slide-up mb-6">Our Running Community</h2>
+      <p class="text-xl text-center mb-16 max-w-4xl mx-auto text-gray-300">Join a vibrant community of runners, share experiences, and grow together in your running journey.</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Community Events -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="aspect-w-16 aspect-h-9 bg-gray-700 rounded-lg overflow-hidden mb-6">
+            <img src="https://placehold.co/400x225/374151/FFFFFF/png?text=Community+Events" alt="Community Events" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Community Events</h3>
+          <p class="text-gray-300 mb-6">Regular meetups, group runs, and social gatherings to connect with fellow runners.</p>
+          <div class="space-y-3">
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Weekly group runs
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Social gatherings
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Training workshops
+            </div>
+          </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="aspect-w-16 aspect-h-9 bg-gray-700 rounded-lg overflow-hidden mb-6">
+            <img src="https://placehold.co/400x225/374151/FFFFFF/png?text=Success+Stories" alt="Success Stories" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Success Stories</h3>
+          <p class="text-gray-300 mb-6">Be inspired by the achievements and journeys of our community members.</p>
+          <div class="space-y-3">
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              First marathon stories
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Personal bests
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Transformation journeys
+            </div>
+          </div>
+        </div>
+
+        <!-- Community Support -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="aspect-w-16 aspect-h-9 bg-gray-700 rounded-lg overflow-hidden mb-6">
+            <img src="https://placehold.co/400x225/374151/FFFFFF/png?text=Community+Support" alt="Community Support" class="w-full h-full object-cover">
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Community Support</h3>
+          <p class="text-gray-300 mb-6">Get advice, motivation, and support from experienced runners in our community.</p>
+          <div class="space-y-3">
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Mentorship program
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Training groups
+            </div>
+            <div class="flex items-center text-gray-300">
+              <span class="text-blue-400 mr-2">•</span>
+              Online community
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Join Community CTA -->
+      <div class="text-center mt-16">
+        <a href="#" class="inline-block bg-blue-500 text-white px-8 py-4 rounded-full hover:bg-blue-600 transition-colors font-semibold text-lg">Join Our Community</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fitness Apps Popularity Section -->
+  <section id="fitness-apps" class="bg-gray-900 py-16">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl md:text-6xl font-extrabold text-center animate-slide-up mb-6">Runner's Choice: TOP 5 Fitness Apps in 2025</h1>
+      <p class="text-xl text-center mb-16 max-w-4xl mx-auto text-gray-300">Enhance your running experience with these top fitness apps. We've compared five popular options to help you choose the best one for your goals.</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Wise Fitness -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="flex items-center mb-6">
+            <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center mr-4">
+              <img src="https://placehold.co/80x80/6366F1/FFFFFF/png?text=WF" alt="Wise Fitness Logo" class="w-16 h-16 rounded-lg">
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold">Wise Fitness</h3>
+              <div class="flex items-center mt-1">
+                <span class="text-yellow-400">★★★★★</span>
+                <span class="text-gray-400 text-sm ml-2">4.9/5</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-6">Wise Fitness offers a sleek, user-friendly platform tailored for runners who value simplicity and mindfulness. With features like guided breathing exercises, personalized recovery plans, and seamless integration with wearables, it's perfect for those who want a holistic approach to running.</p>
+          <div class="flex justify-between items-center">
+            <a href="https://wisefitness.my.canva.site/" class="text-blue-400 hover:text-blue-300 transition-colors font-semibold">Visit Wise Fitness</a>
+            <span class="text-sm text-gray-400">Free Tier Available</span>
+          </div>
+        </div>
+
+        <!-- Strava -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="flex items-center mb-6">
+            <div class="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center mr-4">
+              <img src="https://placehold.co/80x80/FC4C02/FFFFFF/png?text=ST" alt="Strava Logo" class="w-16 h-16 rounded-lg">
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold">Strava</h3>
+              <div class="flex items-center mt-1">
+                <span class="text-yellow-400">★★★★★</span>
+                <span class="text-gray-400 text-sm ml-2">4.8/5</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-6">Strava is a favorite among competitive runners, boasting a vibrant community of over 48 million users. It excels in social engagement, offering features like segments for competing on routes, kudos, and clubs for group challenges.</p>
+          <div class="flex justify-between items-center">
+            <a href="https://www.strava.com" class="text-blue-400 hover:text-blue-300 transition-colors font-semibold">Visit Strava</a>
+            <span class="text-sm text-gray-400">$79.99/year</span>
+          </div>
+        </div>
+
+        <!-- Fitbit -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="flex items-center mb-6">
+            <div class="w-20 h-20 bg-gradient-to-br from-teal-500 to-blue-500 rounded-xl flex items-center justify-center mr-4">
+              <img src="https://placehold.co/80x80/00B0B9/FFFFFF/png?text=FB" alt="Fitbit Logo" class="w-16 h-16 rounded-lg">
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold">Fitbit</h3>
+              <div class="flex items-center mt-1">
+                <span class="text-yellow-400">★★★★☆</span>
+                <span class="text-gray-400 text-sm ml-2">4.5/5</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-6">Fitbit is a leader in fitness tracking, with tens of millions of users globally. It's ideal for runners who want a comprehensive health overview, offering accurate step counts, heart rate monitoring, and sleep tracking.</p>
+          <div class="flex justify-between items-center">
+            <a href="https://www.fitbit.com" class="text-blue-400 hover:text-blue-300 transition-colors font-semibold">Visit Fitbit</a>
+            <span class="text-sm text-gray-400">$9.99/month</span>
+          </div>
+        </div>
+
+        <!-- Garmin -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="flex items-center mb-6">
+            <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl flex items-center justify-center mr-4">
+              <img src="https://placehold.co/80x80/007CC3/FFFFFF/png?text=GA" alt="Garmin Logo" class="w-16 h-16 rounded-lg">
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold">Garmin</h3>
+              <div class="flex items-center mt-1">
+                <span class="text-yellow-400">★★★★★</span>
+                <span class="text-gray-400 text-sm ml-2">4.7/5</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-6">Garmin caters to data-driven runners, with an estimated 18 million watch users. Its app offers advanced metrics like VO2 Max, Training Load, and recovery insights without a subscription.</p>
+          <div class="flex justify-between items-center">
+            <a href="https://www.garmin.com" class="text-blue-400 hover:text-blue-300 transition-colors font-semibold">Visit Garmin</a>
+            <span class="text-sm text-gray-400">Free</span>
+          </div>
+        </div>
+
+        <!-- PulseTrack -->
+        <div class="card p-8 rounded-xl animate-slide-up transform hover:scale-105 transition-all duration-300">
+          <div class="flex items-center mb-6">
+            <div class="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center mr-4">
+              <img src="https://placehold.co/80x80/6366F1/FFFFFF/png?text=PT" alt="PulseTrack Logo" class="w-16 h-16 rounded-lg">
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold">PulseTrack</h3>
+              <div class="flex items-center mt-1">
+                <span class="text-yellow-400">★★★★☆</span>
+                <span class="text-gray-400 text-sm ml-2">4.3/5</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-300 mb-6">PulseTrack is an emerging app designed for runners who love customization. It offers AI-driven training plans, real-time pace alerts, and a unique "Run Mood" feature that suggests workouts based on your emotional state.</p>
+          <div class="flex justify-between items-center">
+            <a href="https://www.pulsetrackapp.com" class="text-blue-400 hover:text-blue-300 transition-colors font-semibold">Visit PulseTrack</a>
+            <span class="text-sm text-gray-400">Free Tier Available</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="bg-gray-800">
+    <div class="container mx-auto px-4">
+      <h2 class="text-center animate-slide-up">Contact Us</h2>
+      <div class="max-w-lg mx-auto">
+        <div id="contact-form">
+          <div class="mb-6">
+            <label for="name" class="block text-gray-300 mb-2">Name</label>
+            <input type="text" id="name" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          </div>
+          <div class="mb-6">
+            <label for="email" class="block text-gray-300 mb-2">Email</label>
+            <input type="email" id="email" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+          </div>
+          <div class="mb-6">
+            <label for="message" class="block text-gray-300 mb-2">Message</label>
+            <textarea id="message" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" rows="5" required></textarea>
+          </div>
+          <button onclick="submitForm()" class="w-full bg-blue-500 text-white px-8 py-3 rounded-full hover:bg-blue-600 transition-colors">Send Message</button>
+        </div>
+        <div id="form-response" class="hidden mt-6 text-center"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 p-6 text-center">
+    <p class="text-gray-300">© 2025 RunPulse. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Mock event data
+    const events = [
+      { id: 1, title: "Urban Marathon", date: "June 25, 2025", description: "A 42K race through the heart of the city.", link: "#" },
+      { id: 2, title: "Mountain 15K", date: "July 10, 2025", description: "Challenge yourself with a rugged trail run.", link: "#" },
+      { id: 3, title: "Coastal Sprint", date: "August 1, 2025", description: "A fast 5K along the scenic coastline.", link: "#" },
+    ];
+
+    // Dynamically render events
+    function renderEvents() {
+      const container = document.getElementById('events-container');
+      container.innerHTML = '';
+      events.forEach(event => {
+        const eventCard = `
+          <div class="card p-6 rounded-lg animate-slide-up">
+            <h3 class="text-xl font-semibold mb-2">${event.title}</h3>
+            <p class="text-gray-300 mb-2">${event.date}</p>
+            <p class="mb-4">${event.description}</p>
+            <a href="${event.link}" class="text-blue-400 hover:text-blue-300 transition-colors">Register Now</a>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', eventCard);
+      });
+    }
+
+    // Form submission handler
+    function submitForm() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      const responseDiv = document.getElementById('form-response');
+
+      if (name && email && message) {
+        responseDiv.classList.remove('hidden', 'text-red-400');
+        responseDiv.classList.add('text-green-400');
+        responseDiv.textContent = 'Message sent! We'll get back to you soon.';
+        document.getElementById('contact-form').reset();
+      } else {
+        responseDiv.classList.remove('hidden', 'text-green-400');
+        responseDiv.classList.add('text-red-400');
+        responseDiv.textContent = 'Please fill out all fields.';
+      }
+    }
+
+    // JavaScript Parallax Effect
+    function handleParallax() {
+      const parallax = document.querySelector('[data-parallax]');
+      if (parallax) {
+        window.addEventListener('scroll', () => {
+          const scrollPosition = window.pageYOffset;
+          parallax.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
+        });
+      }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderEvents();
+      handleParallax();
+    });
+  </script>
+</body>
+</html>

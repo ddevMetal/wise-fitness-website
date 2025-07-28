@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wise Fitness</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    header {
+      background-color: #f8f8f8;
+      padding: 60px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    nav {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+    }
+
+    nav a {
+      margin-left: 15px;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 40px 20px;
+      width: 100%;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .section-content {
+      max-width: 960px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    #about,
+    #services,
+    #plans {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+    }
+
+    #about {
+      background-image: url('https://images.unsplash.com/photo-1554284126-aa88f22d8b74?auto=format&fit=crop&w=1400&q=80');
+    }
+
+    #services {
+      background-image: url('https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1400&q=80');
+    }
+
+    #plans {
+      background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1400&q=80');
+    }
+
+    #about::before,
+    #services::before,
+    #plans::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+
+    h1, h2 {
+      color: #007bff;
+      text-align: center;
+    }
+
+    #about h1, #services h2, #plans h2 {
+      color: #fff;
+    }
+
+    .button {
+      display: inline-block;
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 5px;
+    }
+
+    .services-grid, .testimonials-grid, .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .service-item, .testimonial-item, .plan-box {
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #333;
+    }
+
+    .plan-box.free {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .plan-box.premium {
+      background-color: #ffc107;
+      color: black;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 40px 10px;
+      }
+
+      section {
+        padding: 30px 10px;
+      }
+
+      nav {
+        position: static;
+        text-align: center;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="#about">About Us</a>  
+      <a href="#services">Services</a>
+      <a href="#plans">Subscription Plan</a>
+    </nav>
+  </header>
+
+  <section id="about">
+    <div class="section-content">
+      <h1>Welcome to Wise Fitness</h1>
+      <p>🌿 Make Healthier Choices with Wise Fitness</p>
+      <p>Wise Fitness is more than just a fitness app — it’s your all-in-one guide to living well.</p>
+      <p>Whether you're training at the gym, exercising at home, or just starting your journey, Wise Fitness supports your goals with the tools and guidance you need to thrive.</p>
+    </div>
+  </section>
+
+  <section id="slogan">
+    <h2>Unlock Your Potential with Wise Fitness</h2>
+    <p style="text-align: center; font-size: 1.2em; font-style: italic;">
+      "Transform your body, transform your life. Get personalized fitness plans and expert guidance, all in one app!"
+    </p>
+    <p style="text-align: center;">Download the Wise Fitness app today and start your journey to a better you!</p>
+    <div style="text-align: center;">
+      <a href="#" class="button">Download on iOS</a>
+      <a href="#" class="button">Get it on Google Play</a>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="section-content">
+      <h2>Our Services</h2>
+      <div class="services-grid">
+        <div class="service-item">
+          <h3>Personal Training</h3>
+          <p>One-on-one training sessions tailored to your specific needs and goals.</p>
+        </div>
+        <div class="service-item">
+          <h3>Group Fitness Classes</h3>
+          <p>Fun and motivating group workouts for all fitness levels.</p>
+        </div>
+        <div class="service-item">
+          <h3>Nutrition Coaching</h3>
+          <p>Personalized nutrition plans to support your fitness journey.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="plans">
+    <div class="section-content">
+      <h2>Choose a Plan</h2>
+      <div class="plans-grid">
+        <div class="plan-box free">
+          <h3>Free</h3>
+          <p>
+            ✔ Access to basic workouts<br>
+            ✔ Limited exercise tracking<br>
+            ✔ Daily reminders<br>
+            ✖ Personalized training<br>
+            ✖ Nutrition planning
+          </p>
+        </div>
+        <div class="plan-box premium">
+          <h3>Premium</h3>
+          <p>
+            ✔ All Free features<br>
+            ✔ Personalized fitness plans<br>
+            ✔ Full workout library<br>
+            ✔ Nutrition and meal guidance<br>
+            ✔ Progress tracking and analytics
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <h2>Testimonials</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-item">
+        <p>"Wise Fitness helped me transform my body and my life. I highly recommend their services!"</p>
+        <p><strong>- Jane Doe</strong></p>
+      </div>
+      <div class="testimonial-item">
+        <p>"The group fitness classes are so much fun and I've seen amazing results. I've never felt so motivated!"</p>
+        <p><strong>- John Smith</strong></p>
+      </div>
+      <div class="testimonial-item">
+        <p>"The personalized nutrition plan was exactly what I needed to finally reach my weight loss goals."</p>
+        <p><strong>- Emily Brown</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; FYP-25-S2-09 Wise Fitness</p>
+  </footer>
+
+</body>
+</html>
