@@ -1,8 +1,16 @@
 services:
   - type: web
-    name: fyp-website
+    name: wise-fitness-website
     env: docker
     plan: free
     branch: main
     dockerfilePath: ./Dockerfile
     dockerContext: ./
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: 80
+      - key: NODE_ENV
+        value: production
+    # Auto-deploy on push to main branch
+    autoDeploy: true
