@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pending Applications - Wise Fitness Admin</title>
+  <style>
+    :root {
+      --primary: #007bff;
+      --light-bg: #f9f9f9;
+      --dark-bg: #1f1f1f;
+      --card-bg: #ffffff;
+      --card-dark: #2c2c2c;
+      --text-light: #111;
+      --text-dark: #f1f1f1;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --radius: 14px;
+      --transition: 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--light-bg);
+      color: var(--text-light);
+      transition: var(--transition);
+    }
+
+    body.dark {
+      background: var(--dark-bg);
+      color: var(--text-dark);
+    }
+
+    .header {
+      background: var(--primary);
+      color: white;
+      padding: 16px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      z-index: 10;
+    }
+
+    .toggle-mode {
+      font-size: 22px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+    }
+
+    .back-button {
+      background: none;
+      border: none;
+      font-size: 22px;
+      color: white;
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: background-color 0.2s ease;
+    }
+
+    .back-button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .container {
+      padding: 120px 20px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .search-sort-container {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    input[type="text"], select {
+      padding: 8px 12px;
+      font-size: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      flex: 1;
+      min-width: 180px;
+      transition: border-color 0.2s ease;
+    }
+
+    input[type="text"]:focus, select:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .user-card {
+      background: var(--card-bg);
+      padding: 16px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    body.dark .user-card {
+      background: var(--card-dark);
+    }
+
+    .user-info div {
+      margin-bottom: 6px;
+    }
+
+    .label {
+      font-weight: bold;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      color: white;
+      user-select: none;
+    }
+
+    .btn-accept {
+      background-color: #28a745;
+    }
+
+    .btn-reject {
+      background-color: #dc3545;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <button class="back-button" onclick="history.back()" title="Go back">←</button>
+      <span>Pending Business Applications</span>
+    </div>
+    <div>
+      <button class="toggle-mode" id="modeToggle">🌙</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="search-sort-container">
+      <input type="text" id="searchInput" placeholder="Search by Business Name or UEN..." />
+      <select id="sortRegistered">
+        <option value="">Sort by Time</option>
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+      </select>
+      <select id="sortUEN">
+        <option value="">Sort by UEN</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </div>
+    <div id="pendingList">Loading pending applications...</div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import {
+      getFirestore,
+      collection,
+      query,
+      where,
+      getDocs,
+      updateDoc,
+      doc,
+      deleteDoc
+    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAIFV7ynXUzA0p-CrmVOE2lFRgaf_9g_k4",
+      authDomain: "fyp-25-s2-09.firebaseapp.com",
+      projectId: "fyp-25-s2-09",
+      storageBucket: "fyp-25-s2-09.appspot.com",
+      messagingSenderId: "838641447649",
+      appId: "1:838641447649:web:6ddfb234b3d445f16dbda0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const pendingList = document.getElementById("pendingList");
+    const modeToggle = document.getElementById("modeToggle");
+    const searchInput = document.getElementById("searchInput");
+    const sortRegistered = document.getElementById("sortRegistered");
+    const sortUEN = document.getElementById("sortUEN");
+
+    let allApplications = [];
+
+    // Theme handling
+    modeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      const isDark = document.body.classList.contains("dark");
+      modeToggle.textContent = isDark ? "☀️" : "🌙";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+      modeToggle.textContent = "☀️";
+    }
+
+    // Auth check
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) return location.href = "Login.html";
+      const snap = await getDocs(query(collection(db, "admins"), where("__name__", "==", user.uid)));
+      if (snap.empty) {
+        alert("Access denied.");
+        await signOut(auth);
+        location.href = "Login.html";
+        return;
+      }
+      loadPendingApplications();
+    });
+
+    function getTimeValue(item) {
+      if (!item.registeredAt) return 0;
+      // The date is stored as ISO string, parse to Date
+      return new Date(item.registeredAt).getTime();
+    }
+
+    function renderApplications() {
+      const searchTerm = searchInput.value.trim().toLowerCase();
+
+      let filtered = allApplications.filter(app => {
+        return (
+          app.businessName?.toLowerCase().includes(searchTerm) ||
+          app.uen?.toLowerCase().includes(searchTerm)
+        );
+      });
+
+      // Prioritize items where name or UEN starts with the search term
+      if (searchTerm) {
+        filtered.sort((a, b) => {
+          const startsWithSearch = (val) => val?.toLowerCase().startsWith(searchTerm) ? 1 : 0;
+
+          const aStarts = startsWithSearch(a.businessName) || startsWithSearch(a.uen);
+          const bStarts = startsWithSearch(b.businessName) || startsWithSearch(b.uen);
+
+          if (aStarts > bStarts) return -1;
+          if (aStarts < bStarts) return 1;
+          return 0;
+        });
+      }
+
+      // Sort by Registered date if chosen
+      if (sortRegistered.value === "newest") {
+        filtered.sort((a, b) => getTimeValue(b) - getTimeValue(a));
+      } else if (sortRegistered.value === "oldest") {
+        filtered.sort((a, b) => getTimeValue(a) - getTimeValue(b));
+      }
+
+      // Sort by UEN if chosen
+      if (sortUEN.value === "asc") {
+        filtered.sort((a, b) => (a.uen || "").localeCompare(b.uen || ""));
+      } else if (sortUEN.value === "desc") {
+        filtered.sort((a, b) => (b.uen || "").localeCompare(a.uen || ""));
+      }
+
+      if (filtered.length === 0) {
+        pendingList.innerHTML = "<p>No matching applications found.</p>";
+        return;
+      }
+
+      let html = "";
+      filtered.forEach(docSnap => {
+        html += `
+          <div class="user-card">
+            <div class="user-info">
+              <div><span class="label">Business Name:</span> ${docSnap.businessName || "—"}</div>
+              <div><span class="label">UEN:</span> ${docSnap.uen || "—"}</div>
+              <div><span class="label">Email:</span> ${docSnap.email || "—"}</div>
+              <div><span class="label">Phone:</span> ${docSnap.phone || "—"}</div>
+              <div><span class="label">Services Offered:</span> ${(docSnap.servicesOffered || []).join(", ") || "—"}</div>
+              <div><span class="label">Services Description:</span> ${docSnap.servicesDescription || "—"}</div>
+              <div><span class="label">Registered At:</span> ${docSnap.registeredAt ? new Date(docSnap.registeredAt).toLocaleString() : "—"}</div>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-accept" onclick="verify('${docSnap.id}')">Accept</button>
+              <button class="btn btn-reject" onclick="reject('${docSnap.id}')">Reject</button>
+            </div>
+          </div>
+        `;
+      });
+
+      pendingList.innerHTML = html;
+    }
+
+    async function loadPendingApplications() {
+      const q = query(collection(db, "businessUsers"), where("verified", "==", false));
+      const snap = await getDocs(q);
+
+      if (snap.empty) {
+        pendingList.textContent = "No pending applications.";
+        return;
+      }
+
+      // Map docs to array of objects with id and data
+      allApplications = snap.docs.map(docSnap => ({
+        id: docSnap.id,
+        ...docSnap.data()
+      }));
+
+      renderApplications();
+    }
+
+    window.verify = async (id) => {
+      if (confirm("Approve this business?")) {
+        await updateDoc(doc(db, "businessUsers", id), {
+          verified: true
+        });
+        alert("Business approved.");
+        loadPendingApplications();
+      }
+    };
+
+    window.reject = async (id) => {
+      if (confirm("Reject and delete this application?")) {
+        await deleteDoc(doc(db, "businessUsers", id));
+        alert("Application rejected.");
+        loadPendingApplications();
+      }
+    };
+
+    // Add event listeners for search and sort filters
+    searchInput.addEventListener("input", renderApplications);
+    sortRegistered.addEventListener("change", renderApplications);
+    sortUEN.addEventListener("change", renderApplications);
+  </script>
+</body>
+
+</html>

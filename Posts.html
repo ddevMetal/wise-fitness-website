@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Posts - Wise Fitness</title>
+  <style>
+    :root {
+      --primary: #007bff;
+      --light-bg: #f9f9f9;
+      --dark-bg: #1f1f1f;
+      --card-bg: #ffffff;
+      --card-dark: #2c2c2c;
+      --text-light: #111;
+      --text-dark: #f1f1f1;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --radius: 14px;
+      --transition: 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--light-bg);
+      color: var(--text-light);
+      transition: var(--transition);
+      overflow-x: hidden;
+    }
+
+    body.dark {
+      background: var(--dark-bg);
+      color: var(--text-dark);
+    }
+
+    /* Sidebar styles */
+    .sidebar {
+      position: fixed;
+      top: 56px;
+      right: 0;
+      width: 260px;
+      height: calc(100vh - 56px);
+      background: var(--card-bg);
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.1);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      border-radius: 14px 0 0 14px;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 30;
+      overflow-y: auto;
+    }
+
+    body.dark .sidebar {
+      background: var(--card-dark);
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .sidebar button {
+      background: var(--light-bg);
+      border: none;
+      border-radius: var(--radius);
+      padding: 14px 22px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      color: var(--text-light);
+      text-align: left;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    body.dark .sidebar button {
+      background: var(--card-dark);
+      color: var(--text-dark);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .sidebar button:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Header */
+    .header {
+      background: var(--primary);
+      color: white;
+      padding: 16px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: var(--radius) var(--radius) 0 0;
+      box-shadow: var(--shadow);
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 56px;
+      z-index: 20;
+      transition: right 0.3s ease, width 0.3s ease;
+      user-select: none;
+    }
+
+    .sidebar-active .header {
+      right: 260px;
+      width: calc(100% - 260px);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    #backBtn {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      user-select: none;
+      margin-right: 16px;
+      padding: 0;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    #headerTitle {
+      font-weight: 600;
+      font-size: 18px;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .header-buttons {
+      display: flex;
+      align-items: center;
+    }
+
+    .toggle-mode {
+      cursor: pointer;
+      font-size: 22px;
+      background: none;
+      border: none;
+      color: white;
+      user-select: none;
+      margin-right: 16px;
+    }
+
+    .menu-icon {
+      font-size: 26px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* Container */
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 90px 20px 20px;
+      min-height: 100vh;
+      transition: padding-right 0.3s ease;
+    }
+
+    .sidebar-active .container {
+      padding-right: 280px;
+    }
+
+    /* Posts page styles */
+
+    .create-post {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      color: inherit;
+    }
+
+    .create-post input[type="file"] {
+      display: none;
+    }
+
+    .image-preview {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 10px;
+      border: 2px dashed #aaa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--light-bg);
+    }
+
+    body.dark .image-preview {
+      background: var(--card-dark);
+      border-color: #666;
+    }
+
+    .description {
+      width: 100%;
+      height: 80px;
+      margin-top: 10px;
+      padding: 8px;
+      resize: none;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      font-family: inherit;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: 1px solid var(--text-light);
+      background: var(--card-bg);
+      cursor: pointer;
+      margin-top: 10px;
+      font-weight: 600;
+      color: var(--text-light);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    body.dark .btn {
+      border-color: var(--text-dark);
+      color: var(--text-dark);
+      background: var(--card-dark);
+    }
+
+    .btn:hover {
+      background-color: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .post-card {
+      background: var(--card-bg);
+      padding: 16px;
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      position: relative;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      color: inherit;
+    }
+
+    .post-card img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border: 2px solid #555;
+      display: block;
+      margin: 0 auto;
+      border-radius: 8px;
+    }
+
+    .post-card p {
+      margin-top: 10px;
+      text-align: center;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .post-card .username {
+      font-weight: bold;
+      text-align: center;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .delete-icon {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      user-select: none;
+      color: #900;
+    }
+
+    body.dark .delete-icon {
+      color: #f44;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar" id="sidebar">
+    <button onclick="goProfile()">Profile</button>
+    <button onclick="goSettings()">Settings</button>
+    <button onclick="logout()">Logout</button>
+    <button onclick="resetPassword()">Reset Password</button>
+  </div>
+
+  <div class="header">
+    <div class="header-left">
+      <button id="backBtn" aria-label="Go back" title="Go Back">←</button>
+      <span id="headerTitle">Posts</span>
+    </div>
+
+    <div class="header-buttons">
+      <button class="toggle-mode" id="modeToggle" aria-label="Toggle dark mode">🌙</button>
+      <span class="menu-icon" id="menuBtn" tabindex="0" role="button" aria-label="Toggle menu sidebar">☰</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Create Post</h2>
+    <div class="create-post">
+      <label>Optional:</label>
+      <div class="image-preview" id="imagePreview">
+        <span>🖼️</span>
+      </div>
+      <input type="file" id="imageInput" accept="image/*" />
+      <button class="btn" onclick="document.getElementById('imageInput').click()">Upload</button>
+      <textarea class="description" id="descriptionInput" placeholder="Description"></textarea>
+      <button class="btn" onclick="createPost()">Post</button>
+    </div>
+
+    <div id="postContainer"></div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAIFV7ynXUzA0p-CrmVOE2lFRgaf_9g_k4",
+      authDomain: "fyp-25-s2-09.firebaseapp.com",
+      projectId: "fyp-25-s2-09",
+      storageBucket: "fyp-25-s2-09.appspot.com",
+      messagingSenderId: "838641447649",
+      appId: "1:838641447649:web:6ddfb234b3d445f16dbda0"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // UI Elements
+    const sidebar = document.getElementById('sidebar');
+    const menuBtn = document.getElementById('menuBtn');
+    const backBtn = document.getElementById('backBtn');
+    const modeToggle = document.getElementById('modeToggle');
+    const postContainer = document.getElementById('postContainer');
+    const imageInput = document.getElementById('imageInput');
+    const imagePreview = document.getElementById('imagePreview');
+    let uploadedImage = null;
+
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+      document.body.classList.toggle('sidebar-active');
+    });
+
+    backBtn.addEventListener('click', () => {
+      history.back();
+    });
+
+    modeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      modeToggle.textContent = isDark ? "☀️" : "🌙";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+      modeToggle.textContent = "☀️";
+    }
+
+    imageInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          uploadedImage = e.target.result;
+          imagePreview.innerHTML = `<img src="${uploadedImage}" style="width:100%; height:100%; object-fit:cover;" />`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Render post card with delete security and businessName display
+    function renderPost(id, data) {
+      const post = document.createElement('div');
+      post.className = 'post-card';
+
+      const username = data.username || "You";
+      const imageHTML = data.imageUrl ? `<img src="${data.imageUrl}" />` : '';
+      const descHTML = data.description ? `<p>${data.description}</p>` : '';
+
+      post.innerHTML = `
+        <span class="username">${username}</span>
+        <span class="delete-icon" title="Delete post">×</span>
+        ${imageHTML}
+        ${descHTML}
+      `;
+
+      post.querySelector('.delete-icon').addEventListener('click', () => {
+        const user = auth.currentUser;
+        if (!user) {
+          alert("You must be logged in.");
+          return;
+        }
+        if (user.uid !== data.uid) {
+          alert("You can only delete your own posts.");
+          return;
+        }
+        if (confirm("Delete this post?")) {
+          db.collection('posts').doc(id).delete()
+            .catch(err => alert("Error deleting: " + err.message));
+        }
+      });
+
+      return post;
+    }
+
+    // Load posts from Firestore realtime
+    function loadPosts() {
+      db.collection('posts')
+        .orderBy('timestamp', 'desc')
+        .onSnapshot(snapshot => {
+          postContainer.innerHTML = '';
+          snapshot.forEach(doc => {
+            const post = renderPost(doc.id, doc.data());
+            postContainer.appendChild(post);
+          });
+        }, err => {
+          console.error("Firestore error:", err);
+        });
+    }
+
+    // Create new post: include uid and businessName
+    async function createPost() {
+      const description = document.getElementById('descriptionInput').value.trim();
+      if (!uploadedImage && !description) return alert("Please upload an image or add a description!");
+
+      const user = auth.currentUser;
+      if (!user) {
+        alert("You must be logged in to post.");
+        return;
+      }
+
+      try {
+        // Get businessName from businessUsers collection
+        const businessDoc = await db.collection('businessUsers').doc(user.uid).get();
+        let businessName = "Unknown Business";
+        if (businessDoc.exists && businessDoc.data().businessName) {
+          businessName = businessDoc.data().businessName;
+        }
+
+        await db.collection('posts').add({
+          uid: user.uid,
+          username: businessName,
+          description,
+          imageUrl: uploadedImage || null,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Reset UI
+        uploadedImage = null;
+        imagePreview.innerHTML = `<span>🖼️</span>`;
+        document.getElementById('descriptionInput').value = '';
+        imageInput.value = '';
+
+      } catch (error) {
+        alert("Error creating post: " + error.message);
+      }
+    }
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        loadPosts();
+      } else {
+        postContainer.innerHTML = `<p>Please log in to see and create posts.</p>`;
+      }
+    });
+
+    // Sidebar dummy functions
+    function goProfile() { alert("Go to Profile (not implemented)"); }
+    function goSettings() { alert("Go to Settings (not implemented)"); }
+    function logout() { auth.signOut(); }
+    function resetPassword() { alert("Reset Password (not implemented)"); }
+
+    window.goProfile = goProfile;
+    window.goSettings = goSettings;
+    window.logout = logout;
+    window.resetPassword = resetPassword;
+    window.createPost = createPost;
+  </script>
+</body>
+</html>

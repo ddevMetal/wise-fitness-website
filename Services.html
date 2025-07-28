@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Services - Wise Fitness</title>
+  <style>
+    :root {
+      --primary: #007bff;
+      --light-bg: #f9f9f9;
+      --dark-bg: #1f1f1f;
+      --card-bg: #ffffff;
+      --card-dark: #2c2c2c;
+      --text-light: #111;
+      --text-dark: #f1f1f1;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --radius: 14px;
+      --transition: 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--light-bg);
+      color: var(--text-light);
+      transition: var(--transition);
+      overflow-x: hidden;
+    }
+
+    body.dark {
+      background: var(--dark-bg);
+      color: var(--text-dark);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 260px;
+      height: 100vh;
+      background: var(--card-bg);
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.1);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      border-radius: 14px 0 0 14px;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 30;
+      overflow-y: auto;
+    }
+
+    body.dark .sidebar {
+      background: var(--card-dark);
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .sidebar button {
+      background: var(--light-bg);
+      border: none;
+      border-radius: var(--radius);
+      padding: 14px 22px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      color: var(--text-light);
+      text-align: left;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    body.dark .sidebar button {
+      background: var(--card-dark);
+      color: var(--text-dark);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .sidebar button:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+      min-height: 100vh;
+      transition: padding-right 0.3s ease;
+      padding-right: 20px;
+    }
+
+    .sidebar-active .container {
+      padding-right: 280px;
+    }
+
+    .header {
+      background: var(--primary);
+      color: white;
+      padding: 16px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: var(--radius) var(--radius) 0 0;
+      box-shadow: var(--shadow);
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 56px;
+      z-index: 20;
+      transition: right 0.3s ease, width 0.3s ease;
+      user-select: none;
+    }
+
+    .sidebar-active .header {
+      right: 260px;
+      width: calc(100% - 260px);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    #backBtn {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      user-select: none;
+      margin-right: 16px;
+      padding: 0;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    #headerTitle {
+      font-weight: 600;
+      font-size: 18px;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .header-buttons {
+      display: flex;
+      align-items: center;
+    }
+
+    .toggle-mode {
+      cursor: pointer;
+      font-size: 22px;
+      background: none;
+      border: none;
+      color: white;
+      user-select: none;
+      margin-right: 16px;
+    }
+
+    .menu-icon {
+      font-size: 26px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    form {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-width: 400px;
+      margin: 0 auto 30px auto;
+      display: none;
+      transition: opacity 0.3s ease;
+    }
+
+    form.active {
+      display: block;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    body.dark form label {
+      color: var(--text-dark);
+    }
+
+    form input[type="text"],
+    form input[type="number"],
+    form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    form input[type="text"]:focus,
+    form input[type="number"]:focus,
+    form textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    form button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      color: white;
+      transition: background-color 0.3s ease;
+      margin-right: 10px;
+    }
+
+    form button.submit {
+      background-color: var(--primary);
+    }
+
+    form button.submit:hover {
+      background-color: #0056b3;
+    }
+
+    form button.cancel {
+      background-color: #dc3545;
+    }
+
+    form button.cancel:hover {
+      background-color: #a71d2a;
+    }
+
+    .create-button-container {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .btn-create {
+      background-color: var(--primary);
+      color: white;
+      font-weight: 700;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 22px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-create:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      background: var(--card-bg);
+      border-collapse: collapse;
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+      font-size: 16px;
+      user-select: text;
+    }
+
+    th {
+      background-color: var(--primary);
+      color: white;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .btn-edit, .btn-delete {
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      color: white;
+      padding: 8px 14px;
+      margin-right: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-edit {
+      background-color: #28a745;
+    }
+
+    .btn-edit:hover {
+      background-color: #1e7e34;
+    }
+
+    .btn-delete {
+      background-color: #dc3545;
+    }
+
+    .btn-delete:hover {
+      background-color: #a71d2a;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="sidebar" id="sidebar">
+    <button onclick="goProfile()">Profile</button>
+    <button onclick="goSettings()">Settings</button>
+    <button onclick="logout()">Logout</button>
+    <button onclick="resetPassword()">Reset Password</button>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="header-left">
+        <button id="backBtn" aria-label="Go back" title="Go Back">←</button>
+        <span id="headerTitle">Services</span>
+      </div>
+
+      <div class="header-buttons">
+        <button class="toggle-mode" id="modeToggle" aria-label="Toggle dark mode">🌙</button>
+        <span class="menu-icon" id="menuBtn" tabindex="0" role="button" aria-label="Toggle menu sidebar">☰</span>
+      </div>
+    </div>
+
+    <h1 style="margin-top: 100px; text-align: center;">Service List</h1>
+
+    <div class="create-button-container">
+      <button id="btnShowCreate" class="btn-create">Create New Service</button>
+    </div>
+
+    <form id="createServiceForm" novalidate>
+      <label for="serviceName">Service Name</label>
+      <input type="text" id="serviceName" required />
+
+      <label for="serviceDescription">Service Description</label>
+      <textarea id="serviceDescription" rows="3" required></textarea>
+
+      <label for="servicePrice">Price</label>
+      <input type="number" id="servicePrice" step="0.01" min="0" required />
+
+      <button type="submit" class="submit">Create</button>
+      <button type="button" class="cancel" id="btnCancelCreate">Cancel</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Service Name</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Owner UID</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="servicesTableBody">
+        <!-- Dynamic content -->
+      </tbody>
+    </table>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, deleteDoc, doc, addDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAIFV7ynXUzA0p-CrmVOE2lFRgaf_9g_k4",
+      authDomain: "fyp-25-s2-09.firebaseapp.com",
+      projectId: "fyp-25-s2-09",
+      storageBucket: "fyp-25-s2-09.appspot.com",
+      messagingSenderId: "838641447649",
+      appId: "1:838641447649:web:6ddfb234b3d445f16dbda0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth();
+
+    let currentUserUid = null;
+
+    const servicesTableBody = document.getElementById("servicesTableBody");
+    const btnShowCreate = document.getElementById("btnShowCreate");
+    const createServiceForm = document.getElementById("createServiceForm");
+    const btnCancelCreate = document.getElementById("btnCancelCreate");
+    const inputName = document.getElementById("serviceName");
+    const inputDescription = document.getElementById("serviceDescription");
+    const inputPrice = document.getElementById("servicePrice");
+    const sidebar = document.getElementById("sidebar");
+    const menuBtn = document.getElementById("menuBtn");
+    const modeToggle = document.getElementById("modeToggle");
+    const backBtn = document.getElementById("backBtn");
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        currentUserUid = user.uid;
+        loadServices();
+      } else {
+        alert("Not logged in. Redirecting...");
+        window.location.href = "index.html";
+      }
+    });
+
+    async function loadServices() {
+      servicesTableBody.innerHTML = "";
+      try {
+        const snapshot = await getDocs(collection(db, "services"));
+        snapshot.forEach(docSnap => {
+          const data = docSnap.data();
+          const docId = docSnap.id;
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${data.name || "N/A"}</td>
+            <td>${data.description || "N/A"}</td>
+            <td>${data.price != null ? data.price.toFixed(2) : "N/A"}</td>
+            <td>${data.ownerId || docId}</td>
+            <td>
+              <button class="btn-edit" onclick="editService('${docId}')">Edit</button>
+              <button class="btn-delete" onclick="deleteService('${docId}')">Delete</button>
+            </td>
+          `;
+          servicesTableBody.appendChild(row);
+        });
+      } catch (err) {
+        console.error("Failed to load services:", err);
+      }
+    }
+
+    window.deleteService = async function(serviceId) {
+      if (confirm("Are you sure you want to delete this service?")) {
+        try {
+          await deleteDoc(doc(db, "services", serviceId));
+          alert("Service deleted.");
+          loadServices();
+        } catch (err) {
+          alert("Error deleting service.");
+          console.error(err);
+        }
+      }
+    };
+
+    window.editService = function(serviceId) {
+      alert("Edit clicked for: " + serviceId);
+      // Add edit logic here if needed
+    };
+
+    btnShowCreate.addEventListener("click", () => {
+      createServiceForm.classList.add("active");
+      btnShowCreate.style.display = "none";
+    });
+
+    btnCancelCreate.addEventListener("click", () => {
+      resetCreateForm();
+    });
+
+    createServiceForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = inputName.value.trim();
+      const description = inputDescription.value.trim();
+      const price = parseFloat(inputPrice.value);
+      if (!name || !description || isNaN(price) || price < 0) {
+        alert("Please fill out all fields correctly.");
+        return;
+      }
+      try {
+        await addDoc(collection(db, "services"), {
+          name,
+          description,
+          price,
+          ownerId: currentUserUid,
+          createdAt: new Date()
+        });
+        alert("Service created successfully.");
+        resetCreateForm();
+        loadServices();
+      } catch (err) {
+        alert("Failed to create service.");
+        console.error(err);
+      }
+    });
+
+    function resetCreateForm() {
+      createServiceForm.classList.remove("active");
+      btnShowCreate.style.display = "inline-block";
+      createServiceForm.reset();
+    }
+
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
+      document.body.classList.toggle("sidebar-active");
+    });
+
+    modeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      modeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+      localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+    });
+
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+      modeToggle.textContent = "☀️";
+    }
+
+    window.logout = async () => {
+      try {
+        await signOut(auth);
+        window.location.href = "BusinessUser.html";
+      } catch (error) {
+        alert("Failed to logout: " + error.message);
+      }
+    };
+
+    window.goProfile = () => alert("Go to Profile page (not implemented)");
+    window.goSettings = () => alert("Go to Settings page (not implemented)");
+
+    window.resetPassword = () => {
+      const user = auth.currentUser;
+      if (!user || !user.email) {
+        alert("No user logged in.");
+        return;
+      }
+      if (confirm(`Send password reset email to ${user.email}?`)) {
+        sendPasswordResetEmail(auth, user.email)
+          .then(() => alert("Password reset email sent!"))
+          .catch(err => alert("Error sending reset email: " + err.message));
+      }
+    };
+
+    backBtn.addEventListener("click", () => {
+      history.back();
+    });
+  </script>
+</body>
+</html>

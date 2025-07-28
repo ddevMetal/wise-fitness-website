@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manage Landing Page - Wise Fitness</title>
+  <style>
+    :root {
+      --primary: #007bff;
+      --light-bg: #f9f9f9;
+      --card-bg: #ffffff;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --radius: 14px;
+      --text-light: #222;
+      --transition: 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--light-bg);
+      color: var(--text-light);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: padding-right var(--transition);
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 260px;
+      height: 100vh;
+      background: var(--card-bg);
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.1);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      border-radius: 14px 0 0 14px;
+      transform: translateX(100%);
+      transition: transform var(--transition);
+      z-index: 30;
+      overflow-y: auto;
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .sidebar button {
+      background: var(--light-bg);
+      border: none;
+      border-radius: var(--radius);
+      padding: 14px 22px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      color: var(--text-light);
+      text-align: left;
+      transition: background-color var(--transition), color var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar button:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* HEADER */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      box-shadow: var(--shadow);
+      z-index: 100;
+      border-radius: 0 0 var(--radius) var(--radius);
+      transition: right var(--transition), width var(--transition);
+    }
+
+    body.sidebar-active .header {
+      right: 260px;
+      width: calc(100% - 260px);
+    }
+
+    #backBtn,
+    #menuBtn {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .headerTitle {
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      flex-grow: 1;
+      margin: 0 12px;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 800px;
+      margin: 80px auto 40px;
+      padding: 24px 20px;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: padding-right var(--transition);
+      overflow-y: auto;
+    }
+
+    body.sidebar-active .container {
+      padding-right: 280px;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin: 15px 0 5px;
+    }
+
+    textarea, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      resize: vertical;
+    }
+
+    .save-btn {
+      margin-top: 25px;
+      background-color: var(--primary);
+      color: white;
+      font-weight: 700;
+      border: none;
+      padding: 14px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      width: 100%;
+      transition: background-color var(--transition);
+    }
+
+    .save-btn:hover {
+      background-color: #0056b3;
+    }
+
+    #message {
+      margin-top: 20px;
+      font-weight: 600;
+      color: green;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <button onclick="goProfile()">Profile</button>
+    <button onclick="goSettings()">Settings</button>
+    <button onclick="logout()">Logout</button>
+    <button onclick="resetPassword()">Reset Password</button>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <button id="backBtn" title="Back">←</button>
+    <div class="headerTitle">Manage Landing Page</div>
+    <button id="menuBtn" title="Menu">☰</button>
+  </header>
+
+  <!-- Main Form -->
+  <main class="container">
+    <form id="landingForm">
+      <label for="welcomeText">Welcome Text</label>
+      <textarea id="welcomeText" rows="3" placeholder="Welcome message..."></textarea>
+
+      <label for="slogan">Slogan</label>
+      <textarea id="slogan" rows="3" placeholder="Slogan text..."></textarea>
+
+      <label for="aboutSection">About Section</label>
+      <textarea id="aboutSection" rows="6" placeholder="About us content..."></textarea>
+
+      <button type="submit" class="save-btn">Save Changes</button>
+    </form>
+
+    <div id="message"></div>
+  </main>
+
+  <!-- Firebase + Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAIFV7ynXUzA0p-CrmVOE2lFRgaf_9g_k4",
+      authDomain: "fyp-25-s2-09.firebaseapp.com",
+      projectId: "fyp-25-s2-09",
+      storageBucket: "fyp-25-s2-09.appspot.com",
+      messagingSenderId: "838641447649",
+      appId: "1:838641447649:web:6ddfb234b3d445f16dbda0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const welcomeTextEl = document.getElementById("welcomeText");
+    const sloganEl = document.getElementById("slogan");
+    const aboutSectionEl = document.getElementById("aboutSection");
+    const messageEl = document.getElementById("message");
+    const form = document.getElementById("landingForm");
+    const sidebar = document.getElementById("sidebar");
+    const menuBtn = document.getElementById("menuBtn");
+
+    // Back button
+    document.getElementById("backBtn").addEventListener("click", () => {
+      history.back();
+    });
+
+    // Toggle sidebar
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
+      document.body.classList.toggle("sidebar-active");
+    });
+
+    // Auth check
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        alert("You must be logged in.");
+        window.location.href = "Login.html";
+        return;
+      }
+
+      const adminDocRef = doc(db, "admins", user.uid);
+      const adminDoc = await getDoc(adminDocRef);
+
+      if (!adminDoc.exists()) {
+        alert("Access denied. You are not a system admin.");
+        await signOut(auth);
+        window.location.href = "Login.html";
+        return;
+      }
+
+      await loadLandingPage();
+    });
+
+    async function loadLandingPage() {
+      const docRef = doc(db, "landingPage", "main");
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        welcomeTextEl.value = data.welcomeText || "";
+        sloganEl.value = data.slogan || "";
+        aboutSectionEl.value = data.aboutSection || "";
+      }
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      messageEl.style.color = "green";
+      messageEl.textContent = "";
+
+      try {
+        await setDoc(doc(db, "landingPage", "main"), {
+          welcomeText: welcomeTextEl.value.trim(),
+          slogan: sloganEl.value.trim(),
+          aboutSection: aboutSectionEl.value.trim()
+        });
+        messageEl.textContent = "Landing page content saved successfully!";
+      } catch (err) {
+        messageEl.style.color = "red";
+        messageEl.textContent = "Error saving content: " + err.message;
+      }
+    });
+
+    // Sidebar functions
+    window.goProfile = () => alert("Go to Profile (not implemented)");
+    window.goSettings = () => alert("Go to Settings (not implemented)");
+
+    window.logout = async () => {
+      try {
+        await signOut(auth);
+        window.location.href = "Login.html";
+      } catch (error) {
+        alert("Logout failed: " + error.message);
+      }
+    };
+
+    window.resetPassword = () => {
+      const user = auth.currentUser;
+      if (!user || !user.email) {
+        alert("No user logged in.");
+        return;
+      }
+      if (confirm(`Send password reset to ${user.email}?`)) {
+        sendPasswordResetEmail(auth, user.email)
+          .then(() => alert("Password reset email sent!"))
+          .catch(err => alert("Error: " + err.message));
+      }
+    };
+  </script>
+</body>
+</html>

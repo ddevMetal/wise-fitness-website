@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wise Fitness - Business Sign Up</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .signup-container {
+      background: white;
+      padding: 40px 35px;
+      border-radius: 12px;
+      box-shadow: 0 0 18px rgba(0,0,0,0.12);
+      max-width: 620px;
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 30px;
+      font-weight: 700;
+      font-size: 2rem;
+    }
+
+    form > * {
+      display: block;
+      width: 100%;
+      margin-top: 16px;
+      font-size: 1rem;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+      color: #444;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    textarea {
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1.8px solid #ccc;
+      transition: border-color 0.3s ease;
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    input[type="password"]:focus,
+    textarea:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    /* Services Provided Section */
+    .services-checkboxes {
+      margin-top: 16px;
+      padding: 14px 12px;
+      border: 1.8px solid #ccc;
+      border-radius: 10px;
+      background-color: #fafafa;
+    }
+
+    .services-checkboxes strong {
+      display: block;
+      margin-bottom: 10px;
+      color: #007bff;
+      font-size: 1.1rem;
+    }
+
+    .services-checkboxes label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+      color: #333;
+      font-size: 1rem;
+    }
+
+    .services-checkboxes input[type="checkbox"] {
+      margin-right: 12px;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    #otherServiceText {
+      margin-top: 8px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1.8px solid #ccc;
+      width: 100%;
+      font-size: 1rem;
+      font-family: inherit;
+      box-sizing: border-box;
+      display: none;
+      transition: opacity 0.3s ease;
+      min-height: auto;
+    }
+
+    button[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      font-weight: 700;
+      border: none;
+      padding: 14px 0;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 28px;
+      font-size: 1.2rem;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 5px 12px rgba(0, 123, 255, 0.4);
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+      box-shadow: 0 7px 18px rgba(0, 86, 179, 0.6);
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 28px;
+    }
+
+    .back-link a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .signup-container {
+        padding: 30px 20px;
+        max-width: 100%;
+        border-radius: 0;
+        height: 100vh;
+        overflow-y: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="signup-container">
+  <h2>Business User Registration</h2>
+  <form id="businessSignupForm" novalidate>
+    <label for="businessName">Business Name *</label>
+    <input type="text" id="businessName" placeholder="Enter your business name" required />
+
+    <label for="uen">UEN (Unique Entity Number) *</label>
+    <input type="text" id="uen" placeholder="Enter your UEN" required />
+
+    <div class="services-checkboxes">
+      <strong>Services Provided *</strong>
+      <label><input type="checkbox" name="services" value="Gym" /> Gym</label>
+      <label><input type="checkbox" name="services" value="Crossfit" /> Crossfit</label>
+      <label><input type="checkbox" name="services" value="Dance Studio" /> Dance Studio</label>
+      <label><input type="checkbox" name="services" value="Physiotherapy" /> Physiotherapy</label>
+      <label><input type="checkbox" name="services" value="Martial Arts" /> Martial Arts</label>
+      <label>
+        <input type="checkbox" id="otherServiceCheckbox" /> Other
+      </label>
+      <input type="text" id="otherServiceText" placeholder="Please specify other service" />
+    </div>
+
+    <label for="servicesOfferedDesc">Describe Your Services (optional)</label>
+    <textarea id="servicesOfferedDesc" placeholder="Provide any additional details about your services..."></textarea>
+
+    <label for="email">Business Email Address *</label>
+    <input type="email" id="email" placeholder="Enter your business email" required />
+
+    <label for="phone">Business Phone Number *</label>
+    <input type="tel" id="phone" placeholder="Enter your phone number" required />
+
+    <label for="password">Password *</label>
+    <input type="password" id="password" placeholder="Enter your password" required />
+
+    <label for="confirmPassword">Confirm Password *</label>
+    <input type="password" id="confirmPassword" placeholder="Confirm your password" required />
+
+    <button type="submit">Register Business</button>
+  </form>
+
+  <div class="back-link">
+    <a href="index.html">← Back to Home</a>
+  </div>
+</div>
+
+<!-- Firebase SDKs -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    setDoc
+  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAIFV7ynXUzA0p-CrmVOE2lFRgaf_9g_k4",
+    authDomain: "fyp-25-s2-09.firebaseapp.com",
+    projectId: "fyp-25-s2-09",
+    storageBucket: "fyp-25-s2-09.appspot.com",
+    messagingSenderId: "838641447649",
+    appId: "1:838641447649:web:6ddfb234b3d445f16dbda0",
+    measurementId: "G-TQDTLZ1VPX"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  const otherCheckbox = document.getElementById('otherServiceCheckbox');
+  const otherText = document.getElementById('otherServiceText');
+
+  otherCheckbox.addEventListener('change', () => {
+    if (otherCheckbox.checked) {
+      otherText.style.display = 'block';
+      otherText.required = true;
+      otherText.focus();
+    } else {
+      otherText.style.display = 'none';
+      otherText.value = '';
+      otherText.required = false;
+    }
+  });
+
+  document.getElementById("businessSignupForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const businessName = document.getElementById("businessName").value.trim();
+    const uen = document.getElementById("uen").value.trim();
+
+    // Collect services selected
+    const selectedServices = Array.from(document.querySelectorAll('input[name="services"]:checked')).map(cb => cb.value);
+    if (otherCheckbox.checked) {
+      if (!otherText.value.trim()) {
+        alert("Please specify your other service.");
+        otherText.focus();
+        return;
+      }
+      selectedServices.push(otherText.value.trim());
+    }
+
+    if (selectedServices.length === 0) {
+      alert("Please select at least one service provided.");
+      return;
+    }
+
+    const servicesOfferedDesc = document.getElementById("servicesOfferedDesc").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
+    try {
+      // Create user without email verification step
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Save business profile to Firestore, admin will verify manually
+      await setDoc(doc(db, "businessUsers", user.uid), {
+        businessName,
+        uen,
+        servicesOffered: selectedServices,
+        servicesDescription: servicesOfferedDesc || null,
+        email,
+        phone: phone || null,
+        registeredAt: new Date().toISOString(),
+        verified: false  // Admin updates this after manual verification
+      });
+
+      alert(`Registration successful! Your account will be reviewed by our admin. You will receive an email once your registration is approved.`);
+
+      window.location.href = "Login.html";
+
+    } catch (error) {
+      alert("Error: " + error.message);
+    }
+  });
+</script>
+
+</body>
+</html>

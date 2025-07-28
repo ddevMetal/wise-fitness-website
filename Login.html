@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wise Fitness - Login</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 24px;
+    }
+    input[type="email"],
+    input[type="password"],
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .links {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .links a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-container">
+  <h2>Login to Wise Fitness</h2>
+  <form id="loginForm">
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button type="submit">Login</button>
+    <div id="errorMessage" class="error"></div>
+  </form>
+  <div class="links">
+    <a href="index.html">Don't have an account? Register</a>
+  </div>
+</div>
+
+<!-- Firebase SDKs -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    getDoc,
+    updateDoc
+  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAIFV7ynXUzA0p-CrmVOE2lFRgaf_9g_k4",
+    authDomain: "fyp-25-s2-09.firebaseapp.com",
+    projectId: "fyp-25-s2-09",
+    storageBucket: "fyp-25-s2-09.appspot.com",
+    messagingSenderId: "838641447649",
+    appId: "1:838641447649:web:6ddfb234b3d445f16dbda0",
+    measurementId: "G-TQDTLZ1VPX"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const errorMessage = document.getElementById("errorMessage");
+    errorMessage.textContent = "";
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      const uid = user.uid;
+
+      // 1. Check if user is an admin
+      const adminDoc = await getDoc(doc(db, "admins", uid));
+      if (adminDoc.exists()) {
+        console.log("User is admin");
+        window.location.href = "SystemAdmin.html";
+        return;
+      }
+
+      // 2. Check if user is a business user
+      const businessDoc = await getDoc(doc(db, "businessUsers", uid));
+      if (businessDoc.exists()) {
+        const data = businessDoc.data();
+        if (data.verified) {
+          console.log("User is verified business user");
+          window.location.href = "BusinessUser.html";
+        } else {
+          errorMessage.textContent = "Your business account is pending approval by admin.";
+        }
+        return;
+      }
+
+      // 3. Check if user is a regular user
+      const userDoc = await getDoc(doc(db, "users", uid));
+      if (userDoc.exists()) {
+        await user.reload(); // 🔄 Refresh user emailVerified status
+        if (!user.emailVerified) {
+          errorMessage.textContent = "Please verify your email before logging in.";
+          return;
+        }
+
+        // ✅ Update Firestore field
+        await updateDoc(doc(db, "users", uid), {
+          emailVerified: true
+        });
+
+        console.log("User is normal user");
+        window.location.href = "userDashboard.html";
+        return;
+      }
+
+      // If user document not found in any collection
+      errorMessage.textContent = "Account exists but not properly registered. Contact support.";
+
+    } catch (error) {
+      console.error("Login error:", error);
+      errorMessage.textContent = error.message;
+    }
+  });
+</script>
+
+</body>
+</html>

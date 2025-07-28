@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wise Fitness</title>
   <style>
     body {
@@ -31,6 +31,15 @@
       text-decoration: none;
       color: #007bff;
       font-weight: bold;
+      font-size: 1rem;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    nav a:hover {
+      background-color: #e0eaff;
     }
 
     section {
@@ -49,11 +58,14 @@
 
     #about,
     #services,
-    #plans {
+    #plans,
+    #slogan {
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       color: white;
+      position: relative;
+      min-height: 320px;
     }
 
     #about {
@@ -68,9 +80,14 @@
       background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1400&q=80');
     }
 
+    #slogan {
+      background-image: url('https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1400&q=80');
+    }
+
     #about::before,
     #services::before,
-    #plans::before {
+    #plans::before,
+    #slogan::before {
       content: "";
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -83,7 +100,7 @@
       text-align: center;
     }
 
-    #about h1, #services h2, #plans h2 {
+    #about h1, #services h2, #plans h2, #slogan h2 {
       color: #fff;
     }
 
@@ -95,6 +112,12 @@
       text-decoration: none;
       border-radius: 5px;
       margin: 5px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
     }
 
     .services-grid, .testimonials-grid, .plans-grid {
@@ -144,6 +167,41 @@
         margin-top: 10px;
       }
     }
+
+    /* New Register Buttons Section */
+    .register-buttons {
+      text-align: center;
+      margin: 60px 0;
+    }
+
+    .register-buttons h2 {
+      margin-bottom: 30px;
+      color: #007bff;
+      font-weight: 700;
+      font-size: 2rem;
+    }
+
+    .register-buttons button {
+      min-width: 220px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      padding: 16px 30px;
+      margin: 15px 20px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(38, 115, 254, 0.4);
+      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+      display: inline-block;
+    }
+
+    .register-buttons button:hover {
+      background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+      box-shadow: 0 8px 16px rgba(38, 115, 254, 0.6);
+      transform: translateY(-3px);
+    }
   </style>
 </head>
 <body>
@@ -153,10 +211,11 @@
       <a href="#about">About Us</a>  
       <a href="#services">Services</a>
       <a href="#plans">Subscription Plan</a>
+      <a href="#register">Sign Up</a>
     </nav>
   </header>
 
-  <section id="about">
+  <section id="about" aria-label="About Wise Fitness">
     <div class="section-content">
       <h1>Welcome to Wise Fitness</h1>
       <p>🌿 Make Healthier Choices with Wise Fitness</p>
@@ -165,19 +224,20 @@
     </div>
   </section>
 
-  <section id="slogan">
-    <h2>Unlock Your Potential with Wise Fitness</h2>
-    <p style="text-align: center; font-size: 1.2em; font-style: italic;">
-      "Transform your body, transform your life. Get personalized fitness plans and expert guidance, all in one app!"
-    </p>
-    <p style="text-align: center;">Download the Wise Fitness app today and start your journey to a better you!</p>
-    <div style="text-align: center;">
-      <a href="#" class="button">Download on iOS</a>
-      <a href="#" class="button">Get it on Google Play</a>
+  <section id="slogan" aria-label="Motivational slogan">
+    <div class="section-content">
+      <h2>Unlock Your Potential with Wise Fitness</h2>
+      <p style="text-align: center; font-size: 1.2em; font-style: italic;">
+        "Transform your body, transform your life. Get personalized fitness plans and expert guidance, all in one app!"
+      </p>
+      <p style="text-align: center;">Download the Wise Fitness app today and start your journey to a better you!</p>
+      <div style="text-align: center;">
+        <a href="https://ddevmetal.itch.io/wise-fitness-app" class="button" target="_blank" rel="noopener noreferrer">Get it on Google Play</a>
+      </div>
     </div>
   </section>
 
-  <section id="services">
+  <section id="services" aria-label="Our services">
     <div class="section-content">
       <h2>Our Services</h2>
       <div class="services-grid">
@@ -197,55 +257,144 @@
     </div>
   </section>
 
-  <section id="plans">
+  <section id="plans" aria-label="Subscription plans">
     <div class="section-content">
       <h2>Choose a Plan</h2>
       <div class="plans-grid">
         <div class="plan-box free">
           <h3>Free</h3>
           <p>
-            ✔ Access to basic workouts<br>
-            ✔ Limited exercise tracking<br>
-            ✔ Daily reminders<br>
-            ✖ Personalized training<br>
+            ✔ Access to basic workouts<br />
+            ✔ Limited exercise tracking<br />
+            ✔ Daily reminders<br />
+            ✖ Personalized training<br />
             ✖ Nutrition planning
           </p>
         </div>
         <div class="plan-box premium">
           <h3>Premium</h3>
           <p>
-            ✔ All Free features<br>
-            ✔ Personalized fitness plans<br>
-            ✔ Full workout library<br>
-            ✔ Nutrition and meal guidance<br>
-            ✔ Progress tracking and analytics
+            ✔ All Free features<br />
+            ✔ Personalized fitness plans<br />
+            ✔ Full workout library<br />
+            ✔ Nutrition and meal guidance<br />
+            ✔ Progress tracking and analytics<br />
+            $10/Month
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="testimonials">
-    <h2>Testimonials</h2>
-    <div class="testimonials-grid">
-      <div class="testimonial-item">
-        <p>"Wise Fitness helped me transform my body and my life. I highly recommend their services!"</p>
-        <p><strong>- Jane Doe</strong></p>
-      </div>
-      <div class="testimonial-item">
-        <p>"The group fitness classes are so much fun and I've seen amazing results. I've never felt so motivated!"</p>
-        <p><strong>- John Smith</strong></p>
-      </div>
-      <div class="testimonial-item">
-        <p>"The personalized nutrition plan was exactly what I needed to finally reach my weight loss goals."</p>
-        <p><strong>- Emily Brown</strong></p>
-      </div>
-    </div>
+  <section id="register" class="register-buttons" aria-label="Registration options">
+    <h2>Register as:</h2>
+    <button onclick="location.href='signup.html'">User</button>
+    <button onclick="location.href='BusinessUserSignup.html'">Business User</button>
   </section>
+
+  <section id="testimonials">
+  <div class="section-content">
+    <h2>Testimonials</h2>
+    <div id="testimonial-display" class="testimonial-item" style="transition: opacity 0.5s ease;">
+      <p id="testimonial-text">Loading testimonials...</p>
+      <p id="testimonial-author"><strong></strong></p>
+    </div>
+  </div>
+</section>
 
   <footer>
     <p>&copy; FYP-25-S2-09 Wise Fitness</p>
   </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAIFV7ynXUzA0p-CrmVOE2lFRgaf_9g_k4",
+      authDomain: "fyp-25-s2-09.firebaseapp.com",
+      projectId: "fyp-25-s2-09",
+      storageBucket: "fyp-25-s2-09.firebasestorage.app",
+      messagingSenderId: "838641447649",
+      appId: "1:838641447649:web:6ddfb234b3d445f16dbda0",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Dynamically update landing page content from Firestore
+    const landingPageRef = db.collection("landingPage").doc("main");
+    landingPageRef.get().then(doc => {
+      if (doc.exists) {
+        const data = doc.data();
+        // About section
+        document.querySelector("#about h1").textContent = data.welcomeText || "Welcome to Wise Fitness";
+        document.querySelector("#about p:nth-of-type(1)").textContent = data.slogan || "🌿 Make Healthier Choices with Wise Fitness";
+        document.querySelector("#about p:nth-of-type(2)").textContent = data.aboutSection || "Wise Fitness is more than just a fitness app — it’s your all-in-one guide to living well.";
+        document.querySelector("#about p:nth-of-type(3)").textContent = data.extraText || "Whether you're training at the gym, exercising at home, or just starting your journey, Wise Fitness supports your goals with the tools and guidance you need to thrive.";
+      }
+    }).catch(error => {
+      console.error("Error loading landing page content:", error);
+    });
+
+
+    const testimonialsRef = db.collection("testimonials");
+    let testimonials = [];
+    let currentIndex = 0;
+
+
+    function showStars(rating) {
+      return '★'.repeat(rating) + '☆'.repeat(5 - rating);
+    }
+
+
+    function showTestimonial(index) {
+      const t = testimonials[index];
+      document.getElementById("testimonial-text").textContent = `"${t.text}"`;
+      document.getElementById("testimonial-author").innerHTML = `- ${t.author}<br><span style="color: gold;">${showStars(t.rating)}</span>`;
+    }
+
+
+    function rotateTestimonials() {
+      const container = document.getElementById("testimonial-display");
+      container.classList.add("fade-out");
+      setTimeout(() => {
+        showTestimonial(currentIndex);
+        container.classList.remove("fade-out");
+        currentIndex = (currentIndex + 1) % testimonials.length;
+      }, 500);
+    }
+
+
+   testimonialsRef.where("rating", ">=", 4).get()
+  .then(snapshot => {
+    if (snapshot.empty) {
+      console.log("No testimonials found with rating >= 4");
+    }
+    snapshot.forEach(doc => {
+      console.log("Fetched testimonial:", doc.data()); // Debugging line
+      testimonials.push(doc.data());
+    });
+    if (testimonials.length > 0) {
+      showTestimonial(0);
+      setInterval(rotateTestimonials, 5000);
+    } else {
+      document.getElementById("testimonial-text").textContent = "No top-rated testimonials available.";
+    }
+  })
+  .catch(error => {
+    console.error("Error fetching testimonials:", error);
+    document.getElementById("testimonial-text").textContent = "Error loading testimonials.";
+  });
+
+
+  </script>
+
+  <script>
+    // Smooth scroll to registration section on nav click
+    document.querySelector('a[href="#register"]').addEventListener('click', function(event) {
+      event.preventDefault();
+      document.querySelector('#register').scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
 
 </body>
 </html>

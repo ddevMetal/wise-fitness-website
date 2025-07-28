@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Business User Dashboard - Wise Fitness</title>
+  <style>
+    :root {
+      --primary: #007bff;
+      --light-bg: #f9f9f9;
+      --dark-bg: #1f1f1f;
+      --card-bg: #ffffff;
+      --card-dark: #2c2c2c;
+      --text-light: #111;
+      --text-dark: #f1f1f1;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --radius: 14px;
+      --transition: 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--light-bg);
+      color: var(--text-light);
+      transition: var(--transition);
+      overflow-x: hidden;
+    }
+
+    body.dark {
+      background: var(--dark-bg);
+      color: var(--text-dark);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 260px;
+      height: 100vh;
+      background: var(--card-bg);
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.1);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      border-radius: 14px 0 0 14px;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 30;
+      overflow-y: auto;
+    }
+
+    body.dark .sidebar {
+      background: var(--card-dark);
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .sidebar.active {
+      transform: translateX(0);
+    }
+
+    .sidebar button {
+      background: var(--light-bg);
+      border: none;
+      border-radius: var(--radius);
+      padding: 14px 22px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      color: var(--text-light);
+      text-align: left;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    body.dark .sidebar button {
+      background: var(--card-dark);
+      color: var(--text-dark);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .sidebar button:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+      min-height: 100vh;
+      transition: padding-right 0.3s ease;
+      padding-right: 20px;
+    }
+
+    .sidebar-active .container {
+      padding-right: 280px;
+    }
+
+    .header {
+      background: var(--primary);
+      color: white;
+      padding: 16px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: var(--radius) var(--radius) 0 0;
+      box-shadow: var(--shadow);
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 56px;
+      z-index: 20;
+      transition: right 0.3s ease, width 0.3s ease;
+      user-select: none;
+    }
+
+    .sidebar-active .header {
+      right: 260px;
+      width: calc(100% - 260px);
+    }
+
+    .header span {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .toggle-mode {
+      cursor: pointer;
+      font-size: 22px;
+      background: none;
+      border: none;
+      color: white;
+      user-select: none;
+      margin-right: 16px;
+    }
+
+    .menu-icon {
+      font-size: 26px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .content {
+      margin-top: 80px;
+    }
+
+    .widget-container {
+      margin-top: 20px;
+    }
+
+    .widget-container h3 {
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-weight: 700;
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 6px;
+      max-width: max-content;
+    }
+
+    .widgets {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 28px;
+    }
+
+    .widgets button {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 36px 24px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-light);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      user-select: none;
+      text-align: center;
+    }
+
+    body.dark .widgets button {
+      background: var(--card-dark);
+      color: var(--text-dark);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .widgets button:hover {
+      background: var(--primary);
+      color: white;
+      border-color: white;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 123, 255, 0.6);
+    }
+
+    .widgets button .icon {
+      font-size: 48px;
+      user-select: none;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        padding-right: 20px !important;
+      }
+
+      .sidebar {
+        width: 260px;
+        height: 100vh;
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .header,
+      .sidebar-active .header {
+        right: 0 !important;
+        width: 100% !important;
+      }
+
+      .widgets {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sidebar" id="sidebar">
+    <button onclick="goProfile()">Profile</button>
+    <button onclick="goSettings()">Settings</button>
+    <button onclick="logout()">Logout</button>
+    <button onclick="resetPassword()">Reset Password</button>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <span id="headerTitle">Business User Dashboard</span>
+      <div>
+        <button class="toggle-mode" id="modeToggle">🌙</button>
+        <span class="menu-icon" id="menuBtn">☰</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <h2>Welcome to your dashboard</h2>
+      <p>Select one of the sections below to manage your business.</p>
+
+      <div class="widget-container">
+        <h3>Main Sections</h3>
+        <div class="widgets">
+          <button onclick="goService()">
+            <div class="icon">🛠️</div>
+            Service
+          </button>
+          <button onclick="goPost()">
+            <div class="icon">📝</div>
+            Post
+          </button>
+          <button onclick="goLeaderboard()">
+            <div class="icon">🏆</div>
+            Leaderboard
+          </button>
+          <button onclick="goEvent()">
+            <div class="icon">📅</div>
+            Event
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAIFV7ynXUzA0p-CrmVOE2lFRgaf_9g_k4",
+      authDomain: "fyp-25-s2-09.firebaseapp.com",
+      projectId: "fyp-25-s2-09",
+      storageBucket: "fyp-25-s2-09.appspot.com",
+      messagingSenderId: "838641447649",
+      appId: "1:838641447649:web:6ddfb234b3d445f16dbda0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const sidebar = document.getElementById("sidebar");
+    const menuBtn = document.getElementById("menuBtn");
+    const modeToggle = document.getElementById("modeToggle");
+    const body = document.body;
+    const headerTitle = document.getElementById("headerTitle");
+
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("active");
+      body.classList.toggle("sidebar-active");
+    });
+
+    menuBtn.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        menuBtn.click();
+      }
+    });
+
+    modeToggle.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      const isDark = body.classList.contains("dark");
+      modeToggle.textContent = isDark ? "☀️" : "🌙";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+
+    if (localStorage.getItem("theme") === "dark") {
+      body.classList.add("dark");
+      modeToggle.textContent = "☀️";
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "Login.html";
+      } else {
+        try {
+          const docRef = doc(db, "businessUsers", user.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            const businessName = data.businessName || user.email || "Business User";
+            headerTitle.textContent = `Welcome, ${businessName}`;
+          } else {
+            headerTitle.textContent = `Welcome, ${user.email || "Business User"}`;
+          }
+        } catch (error) {
+          console.error("Error fetching business user data:", error);
+          headerTitle.textContent = `Welcome, ${user.email || "Business User"}`;
+        }
+      }
+    });
+
+    window.logout = async () => {
+      try {
+        await signOut(auth);
+        window.location.href = "Login.html";
+      } catch (error) {
+        console.error("Logout error:", error);
+        alert("Failed to logout: " + error.message);
+      }
+    };
+
+    // Password reset function
+    window.sendPasswordReset = async function () {
+      const user = auth.currentUser;
+      if (!user) {
+        alert("No logged in user.");
+        return;
+      }
+    }
+
+    window.goProfile = () => alert("Go to Profile page (not implemented)");
+    window.goSettings = () => alert("Go to Settings page (not implemented)");
+
+    window.resetPassword = () => {
+      const user = auth.currentUser;
+      if (!user || !user.email) {
+        alert("No user logged in.");
+        return;
+      }
+      const confirmReset = confirm(`Send password reset email to ${user.email}?`);
+      if (confirmReset) {
+        sendPasswordResetEmail(auth, user.email)
+          .then(() => alert("Password reset email sent!"))
+          .catch(err => alert("Error sending reset email: " + err.message));
+      }
+    };
+
+    // Widget navigation
+    window.goService = () => window.location.href = "Services.html";
+    window.goPost = () => window.location.href = "posts.html";
+    window.goLeaderboard = () => window.location.href = "leaderboard.html";
+    window.goEvent = () => window.location.href = "events.html";
+  </script>
+</body>
+
+</html>
