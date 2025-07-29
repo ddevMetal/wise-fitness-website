@@ -1,0 +1,445 @@
+{
+  "trainingPrograms": {
+    "program_id_1": {
+      "title": "4 Weeks Hardcore Abs",
+      "description": "Intensive core training program designed to build strong abdominal muscles and improve core stability through progressive exercises.",
+      "duration": "4_weeks",
+      "frequency": "4_days",
+      "trainingDays": ["monday", "tuesday", "thursday", "friday"],
+      "trainingStyle": "standard_gym",
+      "workouts": {
+        "monday": {
+          "exercises": [
+            {
+              "id": "plank",
+              "name": "Plank",
+              "description": "Hold a plank position",
+              "category": "Core",
+              "subcategory": "Abs",
+              "type": "duration",
+              "sets": 3,
+              "duration": 30,
+              "rest": 60,
+              "notes": "Keep core tight, maintain straight line from head to heels"
+            },
+            {
+              "id": "crunches",
+              "name": "Crunches",
+              "description": "Basic abdominal crunches",
+              "category": "Core",
+              "subcategory": "Abs",
+              "type": "reps",
+              "sets": 3,
+              "reps": 15,
+              "rest": 45,
+              "notes": "Focus on controlled movement"
+            },
+            {
+              "id": "bicycle_crunches",
+              "name": "Bicycle Crunches",
+              "description": "Alternating bicycle motion crunches",
+              "category": "Core",
+              "subcategory": "Abs",
+              "type": "reps",
+              "sets": 3,
+              "reps": 20,
+              "rest": 45,
+              "notes": "Each side counts as one rep"
+            }
+          ]
+        },
+        "tuesday": {
+          "exercises": [
+            {
+              "id": "side_plank",
+              "name": "Side Plank",
+              "description": "Lateral core stability",
+              "category": "Core",
+              "subcategory": "Obliques",
+              "type": "duration",
+              "sets": 2,
+              "duration": 20,
+              "rest": 60,
+              "notes": "Hold each side separately"
+            },
+            {
+              "id": "russian_twists",
+              "name": "Russian Twists",
+              "description": "Rotational core movement",
+              "category": "Core",
+              "subcategory": "Abs",
+              "type": "reps",
+              "sets": 3,
+              "reps": 24,
+              "rest": 45,
+              "notes": "Can add weight for progression"
+            }
+          ]
+        },
+        "thursday": {
+          "exercises": [
+            {
+              "id": "mountain_climbers",
+              "name": "Mountain Climbers",
+              "description": "Dynamic core exercise",
+              "category": "Core",
+              "subcategory": "Abs",
+              "type": "duration",
+              "sets": 4,
+              "duration": 30,
+              "rest": 30,
+              "notes": "Maintain plank position throughout"
+            },
+            {
+              "id": "leg_raises",
+              "name": "Leg Raises",
+              "description": "Lower abdominal exercise",
+              "category": "Core",
+              "subcategory": "Abs",
+              "type": "reps",
+              "sets": 3,
+              "reps": 12,
+              "rest": 60,
+              "notes": "Keep lower back pressed to floor"
+            }
+          ]
+        },
+        "friday": {
+          "exercises": [
+            {
+              "id": "dead_bug",
+              "name": "Dead Bug",
+              "description": "Core stability exercise",
+              "category": "Core",
+              "subcategory": "Abs",
+              "type": "reps",
+              "sets": 3,
+              "reps": 10,
+              "rest": 45,
+              "notes": "Each arm/leg combo counts as one rep"
+            },
+            {
+              "id": "hollow_hold",
+              "name": "Hollow Hold",
+              "description": "Isometric core hold",
+              "category": "Core",
+              "subcategory": "Abs",
+              "type": "duration",
+              "sets": 3,
+              "duration": 20,
+              "rest": 60,
+              "notes": "Press lower back into floor"
+            }
+          ]
+        }
+      },
+      "createdBy": "user_uid_123",
+      "createdAt": "2025-01-29T10:30:00Z",
+      "updatedAt": "2025-01-29T10:30:00Z",
+      "isActive": true,
+      "version": 1
+    },
+    "program_id_2": {
+      "title": "HIIT Metabolic Circuit",
+      "description": "High-intensity interval training focused on metabolic conditioning and fat burning.",
+      "duration": "6_weeks",
+      "frequency": "5_days",
+      "trainingDays": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      "trainingStyle": "metabolic_circuit",
+      "workouts": {
+        "monday": {
+          "exercises": [
+            {
+              "id": "burpees",
+              "name": "Burpees",
+              "description": "Full body explosive movement",
+              "category": "Full Body",
+              "subcategory": "Compound",
+              "type": "duration",
+              "sets": 5,
+              "duration": 45,
+              "rest": 15,
+              "notes": "Circuit style - minimal rest between exercises"
+            },
+            {
+              "id": "jumping_jacks",
+              "name": "Jumping Jacks",
+              "description": "Cardiovascular exercise",
+              "category": "Cardio",
+              "subcategory": "Bodyweight",
+              "type": "duration",
+              "sets": 5,
+              "duration": 30,
+              "rest": 15,
+              "notes": "Keep pace consistent"
+            },
+            {
+              "id": "high_knees",
+              "name": "High Knees",
+              "description": "Running in place with high knees",
+              "category": "Cardio",
+              "subcategory": "Bodyweight",
+              "type": "duration",
+              "sets": 5,
+              "duration": 30,
+              "rest": 15,
+              "notes": "Drive knees up to waist level"
+            }
+          ]
+        }
+      },
+      "createdBy": "user_uid_123",
+      "createdAt": "2025-01-29T11:15:00Z",
+      "updatedAt": "2025-01-29T11:15:00Z",
+      "isActive": true,
+      "version": 1
+    },
+    "program_id_3": {
+      "title": "Beginner Full Body Strength",
+      "description": "Progressive strength training program for beginners focusing on fundamental movement patterns.",
+      "duration": "8_weeks",
+      "frequency": "3_days",
+      "trainingDays": ["monday", "wednesday", "friday"],
+      "trainingStyle": "standard_gym",
+      "workouts": {
+        "monday": {
+          "exercises": [
+            {
+              "id": "squats",
+              "name": "Squats",
+              "description": "Fundamental leg exercise",
+              "category": "Lower Body",
+              "subcategory": "Quadriceps",
+              "type": "reps",
+              "sets": 3,
+              "reps": 12,
+              "rest": 90,
+              "weight": "bodyweight",
+              "notes": "Focus on form before adding weight"
+            },
+            {
+              "id": "push_ups",
+              "name": "Push-ups",
+              "description": "Classic chest exercise",
+              "category": "Upper Body",
+              "subcategory": "Chest",
+              "type": "reps",
+              "sets": 3,
+              "reps": 10,
+              "rest": 60,
+              "notes": "Modify on knees if needed"
+            },
+            {
+              "id": "rows",
+              "name": "Rows",
+              "description": "Horizontal pulling exercise",
+              "category": "Upper Body",
+              "subcategory": "Back",
+              "type": "reps",
+              "sets": 3,
+              "reps": 12,
+              "rest": 90,
+              "weight": "resistance_band",
+              "notes": "Use resistance band or dumbbells"
+            }
+          ]
+        },
+        "wednesday": {
+          "exercises": [
+            {
+              "id": "lunges",
+              "name": "Lunges",
+              "description": "Unilateral leg exercise",
+              "category": "Lower Body",
+              "subcategory": "Quadriceps",
+              "type": "reps",
+              "sets": 3,
+              "reps": 10,
+              "rest": 60,
+              "notes": "Each leg counts as one rep"
+            },
+            {
+              "id": "plank",
+              "name": "Plank",
+              "description": "Core stability hold",
+              "category": "Core",
+              "subcategory": "Abs",
+              "type": "duration",
+              "sets": 3,
+              "duration": 30,
+              "rest": 60,
+              "notes": "Build up duration over time"
+            }
+          ]
+        },
+        "friday": {
+          "exercises": [
+            {
+              "id": "deadlifts",
+              "name": "Deadlifts",
+              "description": "Posterior chain exercise",
+              "category": "Lower Body",
+              "subcategory": "Glutes",
+              "type": "reps",
+              "sets": 3,
+              "reps": 8,
+              "rest": 120,
+              "weight": "light_dumbbells",
+              "notes": "Start with light weight, focus on hip hinge"
+            },
+            {
+              "id": "shoulder_press",
+              "name": "Shoulder Press",
+              "description": "Overhead pressing movement",
+              "category": "Upper Body",
+              "subcategory": "Shoulders",
+              "type": "reps",
+              "sets": 3,
+              "reps": 10,
+              "rest": 90,
+              "weight": "dumbbells",
+              "notes": "Can be done seated or standing"
+            }
+          ]
+        }
+      },
+      "createdBy": "user_uid_456",
+      "createdAt": "2025-01-29T14:20:00Z",
+      "updatedAt": "2025-01-29T14:20:00Z",
+      "isActive": true,
+      "version": 1
+    }
+  },
+  "exercises": {
+    "exercise_id_1": {
+      "id": "plank",
+      "name": "Plank",
+      "description": "Hold a plank position maintaining a straight line from head to heels",
+      "category": "core",
+      "subcategory": "abs",
+      "instructions": [
+        "Start in a push-up position",
+        "Lower onto forearms",
+        "Keep body in straight line",
+        "Engage core throughout",
+        "Hold for specified duration"
+      ],
+      "equipment": ["bodyweight"],
+      "difficulty": "beginner",
+      "muscleGroups": ["abs", "core", "shoulders"],
+      "videoUrl": "https://example.com/plank-video",
+      "imageUrl": "https://example.com/plank-image.jpg",
+      "variations": [
+        "Side plank",
+        "Plank with leg lifts",
+        "Plank up-downs"
+      ],
+      "tips": [
+        "Don't let hips sag",
+        "Keep breathing steady",
+        "Engage glutes for stability"
+      ],
+      "createdAt": "2025-01-29T08:00:00Z",
+      "isActive": true
+    },
+    "exercise_id_2": {
+      "id": "squats",
+      "name": "Squats",
+      "description": "Fundamental lower body exercise targeting quadriceps, glutes, and core",
+      "category": "lower_body",
+      "subcategory": "quads",
+      "instructions": [
+        "Stand with feet shoulder-width apart",
+        "Lower body by bending knees and hips",
+        "Keep chest up and knees tracking over toes",
+        "Descend until thighs parallel to floor",
+        "Drive through heels to return to start"
+      ],
+      "equipment": ["bodyweight", "dumbbells", "barbell"],
+      "difficulty": "beginner",
+      "muscleGroups": ["quadriceps", "glutes", "hamstrings", "core"],
+      "videoUrl": "https://example.com/squat-video",
+      "imageUrl": "https://example.com/squat-image.jpg",
+      "variations": [
+        "Goblet squats",
+        "Jump squats",
+        "Single-leg squats",
+        "Sumo squats"
+      ],
+      "tips": [
+        "Keep weight on heels",
+        "Don't let knees cave inward",
+        "Start with bodyweight before adding load"
+      ],
+      "createdAt": "2025-01-29T08:00:00Z",
+      "isActive": true
+    },
+    "exercise_id_3": {
+      "id": "burpees",
+      "name": "Burpees",
+      "description": "Full-body explosive exercise combining squat, plank, push-up, and jump",
+      "category": "full_body",
+      "subcategory": "compound",
+      "instructions": [
+        "Start standing",
+        "Drop into squat position",
+        "Jump feet back to plank",
+        "Perform push-up (optional)",
+        "Jump feet back to squat",
+        "Explode up with arms overhead"
+      ],
+      "equipment": ["bodyweight"],
+      "difficulty": "intermediate",
+      "muscleGroups": ["full_body", "cardiovascular"],
+      "videoUrl": "https://example.com/burpee-video",
+      "imageUrl": "https://example.com/burpee-image.jpg",
+      "variations": [
+        "Half burpees (no push-up)",
+        "Burpee box jumps",
+        "Single-arm burpees"
+      ],
+      "tips": [
+        "Land softly on jumps",
+        "Maintain core engagement",
+        "Scale intensity as needed"
+      ],
+      "createdAt": "2025-01-29T08:00:00Z",
+      "isActive": true
+    }
+  },
+  "userProfiles": {
+    "user_uid_123": {
+      "email": "trainer1@example.com",
+      "role": "business_user",
+      "businessName": "Elite Fitness Training",
+      "createdPrograms": ["program_id_1", "program_id_2"],
+      "totalPrograms": 2,
+      "lastActive": "2025-01-29T11:15:00Z"
+    },
+    "user_uid_456": {
+      "email": "coach@example.com",
+      "role": "business_user",
+      "businessName": "Beginner Fitness Co",
+      "createdPrograms": ["program_id_3"],
+      "totalPrograms": 1,
+      "lastActive": "2025-01-29T14:20:00Z"
+    }
+  },
+  "programCategories": {
+    "strength": {
+      "name": "Strength Training",
+      "description": "Programs focused on building muscle strength and power",
+      "programs": ["program_id_3"]
+    },
+    "cardio": {
+      "name": "Cardiovascular",
+      "description": "Programs focused on cardiovascular fitness and endurance",
+      "programs": ["program_id_2"]
+    },
+    "core": {
+      "name": "Core Training",
+      "description": "Programs focused on core strength and stability",
+      "programs": ["program_id_1"]
+    }
+  }
+}
