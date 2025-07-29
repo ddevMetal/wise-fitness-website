@@ -91,7 +91,11 @@
 
       <input type="password" id="password" placeholder="Password" required />
       <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
-      <button type="submit">Sign Up</button>
+      <button type="submit" id="signupBtn">Sign Up</button>
+      
+      <!-- Error/Success Messages -->
+      <div id="errorMessage" style="color: red; margin-top: 10px; display: none;"></div>
+      <div id="successMessage" style="color: green; margin-top: 10px; display: none;"></div>
     </form>
 
     <div class="back-link">
@@ -139,6 +143,18 @@
     document.getElementById("signupForm").addEventListener("submit", async (e) => {
       e.preventDefault();
 
+      const signupBtn = document.getElementById("signupBtn");
+      const errorDiv = document.getElementById("errorMessage");
+      const successDiv = document.getElementById("successMessage");
+      
+      // Reset messages
+      errorDiv.style.display = "none";
+      successDiv.style.display = "none";
+      
+      // Show loading state
+      signupBtn.textContent = "Creating Account...";
+      signupBtn.disabled = true;
+
       const username = document.getElementById("username").value.trim();
       const name = document.getElementById("name").value.trim();
       const email = document.getElementById("email").value.trim();
@@ -148,17 +164,34 @@
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
 
+      // Validation
       if (password !== confirmPassword) {
-        alert("Passwords do not match.");
+        errorDiv.textContent = "Passwords do not match.";
+        errorDiv.style.display = "block";
+        signupBtn.textContent = "Sign Up";
+        signupBtn.disabled = false;
+        return;
+      }
+
+      if (password.length < 6) {
+        errorDiv.textContent = "Password must be at least 6 characters long.";
+        errorDiv.style.display = "block";
+        signupBtn.textContent = "Sign Up";
+        signupBtn.disabled = false;
         return;
       }
 
       try {
+        console.log("Attempting to create user account...");
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
+        console.log("User created successfully:", user.uid);
 
+        console.log("Sending email verification...");
         await sendEmailVerification(user);
+        console.log("Email verification sent");
 
+        console.log("Saving user profile to Firestore...");
         await saveUserProfile(user.uid, {
           username,
           fullName: name,
@@ -170,12 +203,22 @@
           suspensionStatus: "no",
           createdAt: new Date().toISOString()
         });
+        console.log("User profile saved successfully");
 
-        alert(`Registration successful! Please check your email (${email}) and verify your account before logging in.`);
-        location.href = "Login.html";
+        successDiv.textContent = `Registration successful! Please check your email (${email}) and verify your account before logging in.`;
+        successDiv.style.display = "block";
+        
+        setTimeout(() => {
+          location.href = "Login.html";
+        }, 3000);
 
       } catch (error) {
-        alert("Error: " + error.message);
+        console.error("Signup error:", error);
+        errorDiv.textContent = "Error: " + error.message;
+        errorDiv.style.display = "block";
+      } finally {
+        signupBtn.textContent = "Sign Up";
+        signupBtn.disabled = false;
       }
     });
   </script>
